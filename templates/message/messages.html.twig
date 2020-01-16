@@ -1,0 +1,86 @@
+{% extends "base.html.twig" %}
+
+
+
+{% block body %}
+
+
+
+
+    <div class="page-content page-container" id="page-content">
+    <div class="padding">
+
+        <div class="row container d-flex justify-content-center">
+            <h2 class="title-symfo">
+                Symfony et le protocole Mercure
+            </h2>
+
+            <div class="col-md-6">
+
+                <div class="card card-bordered">
+                    <div class="card-header">
+                        <h4 class="card-title"><strong>Chat Symfony & Mercure</strong></h4> <a class="btn btn-xs btn-secondary" href="#" data-abc="true">Let's Chat</a>
+                    </div>
+                    <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:500px !important;">
+
+                            {% for message in messages %}
+                                <div class="media media-chat"> <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
+                                    <div class="media-body">
+                                        <p>
+                                            {{ message.texte }}
+
+                                        </p>
+
+                                        <p class="meta">
+                                            <small class="auteur">{{ message.auteur }}</small>
+                                            <time datetime="2018" class="time-zone">{{ message.date|date('H:i:s') }}</time>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            {% endfor %}
+
+
+                        <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+                            <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                        </div>
+                        <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
+                            <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
+                        </div>
+                    </div>
+                    <div class="publisher bt-1 border-light">
+                        <img class="avatar avatar-xs" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
+
+                        {{ form_start(form) }}
+                                {{ form_widget(form.texte, {'attr': {'class': 'publisher-input', 'placeholder': 'Tu peux raconter ta vie'}}) }}
+                        {{ form_end(form) }}
+
+                        <span class="publisher-btn file-group">
+                            <i class="fa fa-paperclip file-browser"></i> <input type="file">
+                        </span>
+                        <a class="publisher-btn" href="#" data-abc="true"><i class="fa fa-smile"></i></a>
+                        <a class="publisher-btn text-info" href="#" data-abc="true"><i class="fa fa-paper-plane"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script type="text/javascript">
+
+        const eventSource = new EventSource('http://localhost:3000/.well-known/mercure?topic=' + encodeURIComponent('http://example.com/books/1'));
+        eventSource.onmessage = event => {
+            // Will be called every time an update is published by the server
+            console.log(JSON.parse(event.data));
+        }
+
+
+
+
+
+    </script>
+{% endblock %}
