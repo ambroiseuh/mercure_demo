@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Message;
+use App\Entity\User;
 use App\Form\MessageType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,6 +36,15 @@ class MessageController extends AbstractController
      */
     public function newMessage(Request $request) {
 
+        if(!$this->session->has('user') && !$this->session->get('user') && !$this->session->get('user') instanceof User) {
+            return $this->redirectToRoute('homepage');
+        }
+
+        /**
+         * @var User $currentUser
+         */
+        $currentUser = $this->session->get('user');
+        $currentUser = $this->em->getRepository(User::class)->find($currentUser->getId());
         $listMessages = $this->em->getRepository(Message::class)->findAll();
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
@@ -45,14 +55,8 @@ class MessageController extends AbstractController
              * @var $message Message
              */
             $message = $form->getData();
-
-            if(!$auteur = $this->session->get('auteur')) {
-                $auteur = $this->generateName();
-            }
-
-
             $message->setDate(new \DateTime());
-            $message->setAuteur($auteur);
+            $message->setAuteur($currentUser);
             $this->em->persist($message);
             $this->em->flush();
 
@@ -61,42 +65,9 @@ class MessageController extends AbstractController
 
         return $this->render('message/messages.html.twig', [
             'form' => $form->createView(),
-            'messages' => $listMessages
+            'messages' => $listMessages,
+            'user' => $currentUser
         ]);
     }
-
-    public function generateName() {
-
-        $names = array(
-            'Dark',
-            'Pika',
-            'Volde',
-            'Aragorn',
-            'Voldo',
-            'Luc',
-            'Obi',
-            'Olaf',
-        );
-
-        $surnames = array(
-            'Vador',
-            'Wan',
-            'Skywalker',
-            'De la foret',
-            'Chu',
-            'Pinochio',
-            'Mort',
-            'Simpson',
-            'Youpi',
-            'Zlatan'
-        );
-
-        $random_name = $names[mt_rand(0, sizeof($names) - 1)];
-        $random_surname = $surnames[mt_rand(0, sizeof($surnames) - 1)];
-        $name = $random_name . ' ' . $random_surname;
-        $this->session->set('auteur', $name);
-        return $random_name . ' ' . $name;
-    }
-
 
 }
