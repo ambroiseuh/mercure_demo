@@ -27,7 +27,7 @@ class Message
     private $date;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages", cascade={"persist"}))
      */
     private $auteur;
 

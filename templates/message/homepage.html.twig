@@ -1,0 +1,10 @@
+{% extends "base.html.twig" %}
+
+
+
+
+{% block body %}
+    {{ form_start(form, { 'attr': {'autocomplete': 'off', 'id': 'form_message'} })  }}
+    {{ form_widget(form.name, {'attr': {'class': 'publisher-input', 'placeholder': 'Quel est ton petit nom'}}) }}
+    {{ form_end(form) }}
+{% endblock %}
