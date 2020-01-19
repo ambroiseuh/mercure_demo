@@ -62,7 +62,6 @@ class MessageController extends AbstractController
 
             return $this->redirectToRoute('message');
         }
-
         return $this->render('message/messages.html.twig', [
             'form' => $form->createView(),
             'messages' => $listMessages,

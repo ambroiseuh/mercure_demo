@@ -3,6 +3,7 @@
 
 
 {% block body %}
+
     <div class="page-content page-container" id="page-content">
     <div class="padding">
 
@@ -13,14 +14,14 @@
                 <div class="card card-bordered">
 
                     <div class="ps-container ps-theme-default ps-active-y scrollbar-msg" id="chat-content" style=" height: 700px; !important;">
-
                             {% for message in messages %}
 
+                                {% set floatMessage = 'right' %}
                                 {% if message.auteur.id == user.id %}
-
+                                    {% set floatMessage = 'left' %}
                                 {% endif %}
 
-                                <div class="media media-chat">
+                                <div class="media media-chat {{ floatMessage }}">
                                     <div class="media-body">
                                         <p class="meta">
                                             <small class="auteur">{{ message.auteur.name|upper }}</small>
