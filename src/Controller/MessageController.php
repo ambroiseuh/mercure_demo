@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Mercure\Publisher;
+use Symfony\Component\Mercure\PublisherInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -31,10 +34,11 @@ class MessageController extends AbstractController
     /**
      * @Route("/message", name="message")
      * @param Request $request
+     * @param PublisherInterface $publisher
      * @return RedirectResponse|Response
      * @throws \Exception
      */
-    public function newMessage(Request $request) {
+    public function newMessage(Request $request, PublisherInterface $publisher) {
 
         if(!$this->session->has('user') && !$this->session->get('user') && !$this->session->get('user') instanceof User) {
             return $this->redirectToRoute('homepage');
@@ -59,6 +63,19 @@ class MessageController extends AbstractController
             $message->setAuteur($currentUser);
             $this->em->persist($message);
             $this->em->flush();
+
+            $update = new Update(
+                'http://super-presente.com/message',
+                json_encode([
+                    'id' => $message->getId(),
+                    'message' => $message->getTexte(),
+                    'user' => $message->getAuteur()->getName(),
+                    'date' => $message->getDate()->format('H:i:s')
+                    ]
+                )
+            );
+
+            $publisher($update);
 
             return $this->redirectToRoute('message');
         }
