@@ -16,9 +16,9 @@
                     <div class="ps-container ps-theme-default ps-active-y scrollbar-msg" id="chat-content" style=" height: 700px; !important;">
                             {% for message in messages %}
 
-                                {% set floatMessage = 'right' %}
+                                {% set floatMessage = 'left' %}
                                 {% if message.auteur.id == user.id %}
-                                    {% set floatMessage = 'left' %}
+                                    {% set floatMessage = 'right' %}
                                 {% endif %}
 
                                 <div class="media media-chat {{ floatMessage }}">
@@ -63,8 +63,40 @@
 {% block javascripts %}
     <script type="text/javascript">
 
-        var objDiv = document.getElementById("chat-content");
+        const objDiv = document.getElementById("chat-content");
         objDiv.scrollTop = objDiv.scrollHeight;
+
+        const url = new URL('http://localhost:3000/.well-known/mercure');
+        url.searchParams.append('topic', 'http://super-presente.com/message');
+        // The URL class is a convenient way to generate URLs such as https://example.com/.well-known/mercure?topic=https://example.com/books/{id}&topic=https://example.com/users/dunglas
+
+        const eventSource = new EventSource(url);
+
+        // The callback will be called every time an update is published
+        eventSource.onmessage = e => {
+            let data = JSON.parse(e.data);
+            let allMessages = document.getElementsByClassName("media-chat");
+            allMessages = allMessages[allMessages.length-1];
+
+            allMessages.insertAdjacentHTML('afterend',
+                `<div class="media media-chat left">
+                    <div class="media-body">
+                        <p class="meta">
+                            <small class="auteur">${data.user}</small>
+                            <small class="time">${data.date}</small>
+                        </p>
+                        <p class="texte">
+                            ${data.message}
+                        </p>
+                    </div>
+                </div>`);
+
+            objDiv.scrollTop = objDiv.scrollHeight;
+
+        }
+
+
+
 
     </script>
 {% endblock %}

@@ -349,11 +349,11 @@ textarea {
 }
 
 .box-messages {
-    -moz-box-shadow: 1px 3px 5px 0px #656565;
-    -webkit-box-shadow: 1px 3px 5px 0px #656565;
-    -o-box-shadow: 1px 3px 5px 0px #656565;
-    box-shadow: 1px 3px 5px 0px #656565;
-    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=161, Strength=5);
+    -moz-box-shadow: 2px 3px 10px 0px #656565;
+    -webkit-box-shadow: 2px 3px 10px 0px #656565;
+    -o-box-shadow: 2px 3px 10px 0px #656565;
+    box-shadow: 2px 3px 10px 0px #656565;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=146, Strength=10);
     border-radius: 10px;
 }
 
@@ -362,11 +362,16 @@ textarea {
     clear: both;
     margin-left: 20px;
     width: 55%;
-    background-color: palegreen;
+    background-color: #eff6f7;
     border-radius: 10px;
     padding: 5px;
     margin-top: 10px;
     margin-bottom: 10px;
+    -moz-box-shadow: 1px 1px 3px 0px #656565;
+    -webkit-box-shadow: 1px 1px 3px 0px #656565;
+    -o-box-shadow: 1px 1px 3px 0px #656565;
+    box-shadow: 1px 1px 3px 0px #656565;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=3);
 }
 
 
@@ -375,10 +380,15 @@ textarea {
     clear: both;
     margin-right: 20px;
     width: 55%;
-    background-color: aqua;
+    background-color: #d5f1a9;
     border-radius: 10px;
     padding: 5px;
     margin-top: 10px;
     margin-bottom: 10px;
+    -moz-box-shadow: 1px 1px 3px 0px #656565;
+    -webkit-box-shadow: 1px 1px 3px 0px #656565;
+    -o-box-shadow: 1px 1px 3px 0px #656565;
+    box-shadow: 1px 1px 3px 0px #656565;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=3);
 
 }
