@@ -66,7 +66,7 @@
         const objDiv = document.getElementById("chat-content");
         objDiv.scrollTop = objDiv.scrollHeight;
 
-        const url = new URL('http://localhost:3000/.well-known/mercure');
+        const url = new URL('{{ mercureUrl }}');
         url.searchParams.append('topic', 'http://super-presente.com/message');
         // The URL class is a convenient way to generate URLs such as https://example.com/.well-known/mercure?topic=https://example.com/books/{id}&topic=https://example.com/users/dunglas
 

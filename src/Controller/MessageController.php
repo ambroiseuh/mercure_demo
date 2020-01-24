@@ -24,11 +24,13 @@ class MessageController extends AbstractController
 
     private $em;
     private $session;
+    private $mercureUrl;
 
-    public function __construct(EntityManagerInterface $entityManager, SessionInterface $session)
+    public function __construct(EntityManagerInterface $entityManager, SessionInterface $session, $mercureUrl)
     {
         $this->em = $entityManager;
         $this->session = $session;
+        $this->mercureUrl = $mercureUrl;
     }
 
     /**
@@ -82,7 +84,8 @@ class MessageController extends AbstractController
         return $this->render('message/messages.html.twig', [
             'form' => $form->createView(),
             'messages' => $listMessages,
-            'user' => $currentUser
+            'user' => $currentUser,
+            'mercureUrl' => $this->mercureUrl
         ]);
     }
 
