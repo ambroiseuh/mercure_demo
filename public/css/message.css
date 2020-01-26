@@ -14,7 +14,9 @@
 }
 
 .padding {
-    padding: 3rem !important
+    padding: 3rem 0 !important;
+    box-sizing: border-box;
+    height: 100vh;
 }
 
 body {
@@ -355,6 +357,7 @@ textarea {
     box-shadow: 2px 3px 10px 0px #656565;
     filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=146, Strength=10);
     border-radius: 10px;
+    box-sizing: border-box;
 }
 
 .left{
@@ -391,4 +394,18 @@ textarea {
     box-shadow: 1px 1px 3px 0px #656565;
     filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=3);
 
+}
+
+
+
+#form_message{
+    margin: 0 auto;
+    width: 400px;
+    text-align: center;
+    padding: 25px;
+    box-sizing: border-box;
+}
+#user_name{
+    border: 1px solid rgba(0, 0, 0, 0.51);
+    border-radius: 5px;
 }
