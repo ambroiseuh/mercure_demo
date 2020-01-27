@@ -78,6 +78,9 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "lcobucci/jwt": {
+        "version": "3.3.1"
+    },
     "ocramius/package-versions": {
         "version": "1.4.2"
     },
