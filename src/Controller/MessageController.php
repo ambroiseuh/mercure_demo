@@ -17,6 +17,7 @@ use Symfony\Component\Mercure\Publisher;
 use Symfony\Component\Mercure\PublisherInterface;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 
 class MessageController extends AbstractController
@@ -37,10 +38,11 @@ class MessageController extends AbstractController
      * @Route("/message", name="message")
      * @param Request $request
      * @param PublisherInterface $publisher
+     * @param SerializerInterface $serializer
      * @return RedirectResponse|Response
      * @throws \Exception
      */
-    public function newMessage(Request $request, PublisherInterface $publisher) {
+    public function newMessage(Request $request, PublisherInterface $publisher, SerializerInterface $serializer) {
 
         if(!$this->session->has('user') && !$this->session->get('user') && !$this->session->get('user') instanceof User) {
             return $this->redirectToRoute('homepage');
@@ -68,13 +70,7 @@ class MessageController extends AbstractController
 
             $update = new Update(
                 'http://super-presente.com/message',
-                json_encode([
-                    'id' => $message->getId(),
-                    'message' => $message->getTexte(),
-                    'user' => $message->getAuteur()->getName(),
-                    'date' => $message->getDate()->format('H:i:s')
-                    ]
-                )
+                $serializer->serialize($message,'json')
             );
 
             $publisher($update);
