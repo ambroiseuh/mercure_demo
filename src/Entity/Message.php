@@ -49,9 +49,9 @@ class Message
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate() : ?string
     {
-        return $this->date;
+        return $this->date->format('H:i:s');
     }
 
     public function setDate(\DateTimeInterface $date): self
