@@ -1,13 +1,18 @@
 <?php
 
-namespace App\Service;
 
-use App\Entity\User;
+namespace App\Mercure;
+
+
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 
-class MercureCookieGenerator{
+class JwtProvider
+{
 
+    /**
+     * @var string
+     */
     private $secret;
 
     public function __construct(string $secret){
@@ -15,13 +20,11 @@ class MercureCookieGenerator{
         $this->secret = $secret;
     }
 
-    public function generate(User $user){
+    public function __invoke(): string{
 
-        $token = (new Builder())
+        return (new Builder())
             ->set('mercure', ['subscribe' => ['*'], 'publish' => ["*"]])
             ->sign(new Sha256(), $this->secret)
             ->getToken();
-
-        return "mercureAuthorization={$token}; path=mercure; HttpOnly;";
     }
 }
