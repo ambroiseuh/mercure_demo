@@ -74,8 +74,9 @@
 
         // The callback will be called every time an update is published
         eventSource.onmessage = e => {
+
             let data = JSON.parse(e.data);
-            console.log("mercure");
+
             let allMessages = document.getElementsByClassName("media-chat");
             allMessages = allMessages[allMessages.length-1];
 
@@ -83,11 +84,11 @@
                 `<div class="media media-chat left">
                     <div class="media-body">
                         <p class="meta">
-                            <small class="auteur">${data.user}</small>
+                            <small class="auteur">${data.auteur.name}</small>
                             <small class="time">${data.date}</small>
                         </p>
                         <p class="texte">
-                            ${data.message}
+                            ${data.texte}
                         </p>
                     </div>
                 </div>`);
