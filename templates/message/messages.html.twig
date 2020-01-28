@@ -13,7 +13,8 @@
 
                 <div class="card card-bordered">
 
-                    <div class="ps-container ps-theme-default ps-active-y scrollbar-msg" id="chat-content" style=" height: 700px; !important;">
+                    <div id="notification" ></div>
+                    <div class="ps-container ps-theme-default ps-active-y scrollbar-msg" id="chat-content">
                             {% for message in messages %}
 
                                 {% set floatMessage = 'left' %}
@@ -59,7 +60,6 @@
 </div>
 {% endblock %}
 
-
 {% block javascripts %}
     <script type="text/javascript">
 
@@ -95,10 +95,24 @@
 
             objDiv.scrollTop = objDiv.scrollHeight;
 
+        };
+        const urlUser = new URL('{{ mercureUrl }}');
+        urlUser.searchParams.append('topic', 'http://super-presente.com/user');
+        // The URL class is a convenient way to generate URLs such as https://example.com/.well-known/mercure?topic=https://example.com/books/{id}&topic=https://example.com/users/dunglas
+
+        const eventSourceUser = new EventSource(urlUser, {withCredentials: true});
+
+        // The callback will be called every time an update is published
+        eventSourceUser.onmessage = e => {
+
+            let data = JSON.parse(e.data);
+            console.log(data);
+            document.getElementById("notification").style.visibility = "visible";
+            document.getElementById("notification").append(`${data.name}`);
+            setTimeout(function(){
+                document.getElementById("notification").innerHTML = "";
+                document.getElementById("notification").style.visibility = "hidden";
+            }, 3000)
         }
-
-
-
-
     </script>
 {% endblock %}

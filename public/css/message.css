@@ -318,8 +318,6 @@ textarea {
     background: #eee;
     box-shadow: 0 0 1px 1px #bbb, inset 0 0 7px rgba(0,0,0,0.3)
 }
-
-
 #chat-content::-webkit-scrollbar {
     width: 6px;
     background-color: #ffffff;
@@ -350,6 +348,9 @@ textarea {
     background: linear-gradient(left, #22ADD4, #1E98BA);
 }
 
+#chat-content{
+    height: 70vh;
+}
 .box-messages {
     -moz-box-shadow: 2px 3px 10px 0px #656565;
     -webkit-box-shadow: 2px 3px 10px 0px #656565;
@@ -408,4 +409,17 @@ textarea {
 #user_name{
     border: 1px solid rgba(0, 0, 0, 0.51);
     border-radius: 5px;
+}
+#notification{
+    width: 70vw;
+    text-align: center;
+    background-color: #1ca64c;
+    border-radius: 10px;
+    visibility: hidden;
+    position: absolute;
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100000;
+    padding: 15px;
 }
