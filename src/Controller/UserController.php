@@ -51,16 +51,16 @@ class UserController extends AbstractController
             $this->em->flush();
             $this->session->set('user', $user);
 
-            $update = new Update(
-                'http://super-presente.com/message',
-                json_encode([
-                        'id' => $user->getId(),
-                        'name' => $user->getName(),
-                    ]
-                )
-            );
-
-            $publisher($update);
+//            $update = new Update(
+//                'http://super-presente.com/message',
+//                json_encode([
+//                        'id' => $user->getId(),
+//                        'name' => $user->getName(),
+//                    ]
+//                )
+//            );
+//
+//            $publisher($update);
 
             return $this->redirectToRoute('message');
         }

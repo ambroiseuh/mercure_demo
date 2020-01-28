@@ -86,7 +86,7 @@ class MessageController extends AbstractController
             'mercureUrl' => $this->mercureUrl
         ]);
 
-        $response->headers->set("set-cookie", $mercureCookieGenerator->generate($currentUser));
+        $response->headers->set("set-cookie", $mercureCookieGenerator->generate());
 
         return $response;
     }

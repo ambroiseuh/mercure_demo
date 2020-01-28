@@ -15,7 +15,7 @@ class MercureCookieGenerator{
         $this->secret = $secret;
     }
 
-    public function generate(User $user){
+    public function generate(){
 
         $token = (new Builder())
             ->set('mercure', ['subscribe' => ['*'], 'publish' => ["*"]])
