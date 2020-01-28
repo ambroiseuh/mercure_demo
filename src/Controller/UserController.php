@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -49,6 +50,18 @@ class UserController extends AbstractController
             $this->em->persist($user);
             $this->em->flush();
             $this->session->set('user', $user);
+
+//            $update = new Update(
+//                'http://super-presente.com/message',
+//                json_encode([
+//                        'id' => $user->getId(),
+//                        'name' => $user->getName(),
+//                    ]
+//                )
+//            );
+//
+//            $publisher($update);
+
             return $this->redirectToRoute('message');
         }
 

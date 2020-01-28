@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\Message;
 use App\Entity\User;
 use App\Form\MessageType;
+use App\Service\MercureCookieGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -38,11 +39,12 @@ class MessageController extends AbstractController
      * @Route("/message", name="message")
      * @param Request $request
      * @param PublisherInterface $publisher
+     * @param MercureCookieGenerator $mercureCookieGenerator
      * @param SerializerInterface $serializer
      * @return RedirectResponse|Response
      * @throws \Exception
      */
-    public function newMessage(Request $request, PublisherInterface $publisher, SerializerInterface $serializer) {
+    public function newMessage(Request $request, PublisherInterface $publisher, SerializerInterface $serializer, MercureCookieGenerator $mercureCookieGenerator) {
 
         if(!$this->session->has('user') && !$this->session->get('user') && !$this->session->get('user') instanceof User) {
             return $this->redirectToRoute('homepage');
@@ -77,12 +79,16 @@ class MessageController extends AbstractController
 
             return $this->redirectToRoute('message');
         }
-        return $this->render('message/messages.html.twig', [
+        $response =  $this->render('message/messages.html.twig', [
             'form' => $form->createView(),
             'messages' => $listMessages,
             'user' => $currentUser,
             'mercureUrl' => $this->mercureUrl
         ]);
+
+        $response->headers->set("set-cookie", $mercureCookieGenerator->generate());
+
+        return $response;
     }
 
 }
