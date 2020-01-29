@@ -6,6 +6,7 @@ namespace App\Mercure;
 
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\Signer\Key;
 
 class JwtProvider
 {
@@ -22,9 +23,9 @@ class JwtProvider
 
     public function __invoke(): string{
 
+
         return (new Builder())
-            ->set('mercure', ['subscribe' => ['*'], 'publish' => ["*"]])
-            ->sign(new Sha256(), $this->secret)
-            ->getToken();
+            ->withClaim('mercure',['subscribe' => ['*'], 'publish' => ["*"]])
+            ->getToken(new Sha256(), new Key($this->secret));
     }
 }
